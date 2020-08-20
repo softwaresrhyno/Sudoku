@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//DESENCARGO
 public class Sudoku : MonoBehaviour
 {
     public int[,] texto = new int[9, 9];
