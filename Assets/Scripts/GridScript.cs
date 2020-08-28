@@ -10,6 +10,18 @@ public class GridScript : MonoBehaviour
 
     void Start()
     {
+        validaGrid();
+        
+
+    // Update is called once per frame
+    void Update()
+    {
+ 
+    }
+
+    void validaGrid()
+    {
+
         for (int i = 0; i < box.GetLength(0); i++) {
             for (int j = 0; j < box.GetLength(1); j++) {
                 GameObject boxGrid = Instantiate(boxOriginal, new Vector3(0, 0, 0), Quaternion.identity);
@@ -134,9 +146,5 @@ public class GridScript : MonoBehaviour
     //     return result;
     //  }
 
-    // Update is called once per frame
-    void Update()
-    {
- 
     }
 }
