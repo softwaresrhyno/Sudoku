@@ -8,7 +8,7 @@ public class BoxSelecionada : MonoBehaviour, ISelectHandler
 {
     public Color corQuadrante;
 
-    private ColorBlock corPadrao;
+    public ColorBlock corPadrao;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -17,10 +17,13 @@ public class BoxSelecionada : MonoBehaviour, ISelectHandler
         int indice = transform.GetSiblingIndex();
         int x = indice / 9;
         int y = indice % 9;
-        Debug.Log(indice + " - Índice | x = " + x + " | y = " + y);
+        //Debug.Log(indice + " - Índice | x = " + x + " | y = " + y);
 
         GameObject grid = GameObject.FindWithTag("Grid");
         GridScript gridScript = grid.GetComponent<GridScript>();
+
+        gridScript.xSelecionado = x;
+        gridScript.ySelecionado = y;
 
         // Resetar cores selecionadas
         for (int i = 0; i < gridScript.box.GetLength(0); i++)

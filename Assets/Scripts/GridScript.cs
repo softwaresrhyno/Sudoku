@@ -6,10 +6,16 @@ public class GridScript : MonoBehaviour
 {
     public GameObject boxOriginal;
     public GameObject[,] box = new GameObject[9, 9];
+    public string[,] boxGameplay = new string[9, 9];
     public GameObject palavra;
     public GameObject[] palavrasVetor = new GameObject[9];
 
+    public bool comecaComPalavras;
+
     public int qtdNumerosApagar;
+
+    public int xSelecionado;
+    public int ySelecionado;
 
     public string[] animais;
 
@@ -27,28 +33,56 @@ public class GridScript : MonoBehaviour
                 box[i, j] = boxGrid;
             }
         }
+
         ajustaTamanhoCelula();
 
         gerarSudoku();
         embaralhar();
 
         animais = new string[9] { "Cachorro", "Cavalo", "Gato", "Raposa", "Leão", "Abacate", "Girafa", "Hipopótamo", "Funchal" };
-
         instanciaPalavras();
-
+        
         if (qtdNumerosApagar >= box.Length)
         {
             qtdNumerosApagar = 0;
         }
 
-        TrocaNumeroPorPalavra();
+        if (comecaComPalavras)
+        {
+            TrocaNumeroPorPalavra();
+        }
+
+        for (int i = 0; i < box.GetLength(0); i++)
+        {
+            for (int j = 0; j < box.GetLength(1); j++)
+            {
+                Text text = box[i, j].GetComponentInChildren<Text>();
+                boxGameplay[i, j] = text.text;
+            }
+        }
+
         apagaNumeros();
+
+        xSelecionado = -1;
+        ySelecionado = -1;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
+        for (int i = 0; i < box.GetLength(0); i++)
+        {
+            for (int j = 0; j < box.GetLength(1); j++)
+            {
+                string textOriginal = boxGameplay[i, j];
+                Text text = box[i, j].GetComponentInChildren<Text>();
 
+                if ((text.text != textOriginal) && text.text != "")
+                {
+                    palavraInvalida(i, j);
+                }
+            }
+        }
     }
 
     public void gerarSudoku()
@@ -217,6 +251,14 @@ public class GridScript : MonoBehaviour
             text.GetComponent<Text>().text = animais[i];
 
         }
+    }
+
+    public void palavraInvalida(int x, int y)
+    {
+        Button botao = box[x, y].GetComponent<Button>();
+        ColorBlock cor = botao.colors;
+        cor.normalColor = Color.red;
+        botao.colors = cor;
     }
 
     public void apagaNumeros()
