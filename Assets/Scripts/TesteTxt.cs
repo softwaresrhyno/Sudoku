@@ -36,7 +36,7 @@ public class TesteTxt : MonoBehaviour
             for(int j = 0; j < pt.Length; j++)
             {
                 palavras[i,j] = pt[j].Trim();
-                //Debug.Log(palavras[i, j] + " = [" + i + "][" + j + "]");
+                Debug.Log(palavras[i, j] + " = [" + i + "][" + j + "]");
             }
 
         }
