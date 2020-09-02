@@ -9,7 +9,7 @@ public class TesteTxt : MonoBehaviour
     //public List<string[,]> palavras = new List<string[,]>();
     public string[,] palavras;
 
-    void Start()
+    void Awake()
     {
         var inputString = asset.ToString();
         var linhas = inputString.Split("\n"[0]);
@@ -36,7 +36,7 @@ public class TesteTxt : MonoBehaviour
             for(int j = 0; j < pt.Length; j++)
             {
                 palavras[i,j] = pt[j].Trim();
-                Debug.Log(palavras[i, j] + " = [" + i + "][" + j + "]");
+                //Debug.Log(palavras[i, j] + " = [" + i + "][" + j + "]");
             }
 
         }

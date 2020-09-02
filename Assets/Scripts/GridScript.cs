@@ -17,7 +17,9 @@ public class GridScript : MonoBehaviour
     public int xSelecionado;
     public int ySelecionado;
 
-    public string[] animais;
+    public ColorBlock boxInvalida;
+
+    public string[] palavras;
 
     void Start()
     {
@@ -39,7 +41,8 @@ public class GridScript : MonoBehaviour
         gerarSudoku();
         embaralhar();
 
-        animais = new string[9] { "Cachorro", "Cavalo", "Gato", "Raposa", "Leão", "Abacate", "Girafa", "Hipopótamo", "Funchal" };
+        palavras = new string[9] { "Cachorro", "Cavalo", "Gato", "Raposa", "Leão", "Abacate", "Girafa", "Hipopótamo", "Funchal" };
+
         instanciaPalavras();
         
         if (qtdNumerosApagar >= box.Length)
@@ -221,7 +224,7 @@ public class GridScript : MonoBehaviour
             {
                 GameObject text = box[i, j].transform.GetChild(0).gameObject;
                 string numero = text.GetComponent<Text>().text;
-                text.GetComponent<Text>().text = animais[int.Parse(numero) - 1];
+                text.GetComponent<Text>().text = palavras[int.Parse(numero) - 1];
                 text.GetComponent<Text>().fontSize = 26;
                 //text.GetComponent<Text>().resizeTextForBestFit = true;
             }
@@ -241,14 +244,14 @@ public class GridScript : MonoBehaviour
 
     public void instanciaPalavras()
     {
-        for (int i = 0; i < animais.Length; i++)
+        for (int i = 0; i < palavras.Length; i++)
         {
             GameObject menuPalavras = Instantiate(palavra, new Vector3(0, 0, 0), Quaternion.identity);
             menuPalavras.transform.SetParent(GameObject.FindGameObjectWithTag("MenuPalavras").transform, false);
 
             palavrasVetor[i] = menuPalavras;
             GameObject text = palavrasVetor[i].transform.GetChild(0).gameObject;
-            text.GetComponent<Text>().text = animais[i];
+            text.GetComponent<Text>().text = palavras[i];
 
         }
     }
@@ -257,7 +260,10 @@ public class GridScript : MonoBehaviour
     {
         Button botao = box[x, y].GetComponent<Button>();
         ColorBlock cor = botao.colors;
-        cor.normalColor = Color.red;
+        cor.normalColor = boxInvalida.normalColor;
+        cor.highlightedColor = boxInvalida.highlightedColor;
+        cor.pressedColor = boxInvalida.pressedColor;
+        cor.selectedColor = boxInvalida.selectedColor;
         botao.colors = cor;
     }
 
@@ -278,5 +284,19 @@ public class GridScript : MonoBehaviour
             }
 
         }
+    }
+
+    public void apagaBox()
+    {
+        Text text = box[xSelecionado, ySelecionado].GetComponentInChildren<Text>();
+        text.text = "";
+        
+        BoxSelecionada boxSelecionadaScript = GameObject.FindWithTag("Box").GetComponent<BoxSelecionada>();
+        Color corQuadrante = boxSelecionadaScript.corQuadrante;
+
+        Button botaoSelecionado = box[xSelecionado, ySelecionado].GetComponent<Button>();
+        ColorBlock cor = botaoSelecionado.colors;
+        cor.normalColor = corQuadrante;
+        botaoSelecionado.colors = cor;
     }
 }
