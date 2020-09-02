@@ -10,52 +10,57 @@ public class BoxSelecionada : MonoBehaviour, ISelectHandler
 
     public ColorBlock corPadrao;
 
+    private GridScript gridScript;
+    private ColorBlock corBoxInvalida;
+
     public void OnSelect(BaseEventData eventData)
     {
         GameObject text = this.gameObject.transform.GetChild(0).gameObject;
-        //text.GetComponent<Text>().text = "SELECIONADO";
         int indice = transform.GetSiblingIndex();
         int x = indice / 9;
         int y = indice % 9;
         //Debug.Log(indice + " - Índice | x = " + x + " | y = " + y);
 
-        GameObject grid = GameObject.FindWithTag("Grid");
-        GridScript gridScript = grid.GetComponent<GridScript>();
+        //GameObject grid = GameObject.FindWithTag("Grid");
+        //GridScript gridScript = grid.GetComponent<GridScript>();
 
         gridScript.xSelecionado = x;
         gridScript.ySelecionado = y;
 
-        // Resetar cores selecionadas
-        for (int i = 0; i < gridScript.box.GetLength(0); i++)
-        {
-            for (int j = 0; j < gridScript.box.GetLength(0); j++)
-            {
-                Button botao = gridScript.box[i, j].GetComponent<Button>();
-                botao.colors = corPadrao;
-            }
-        }
+        resetarCoresGrid();
 
         // Colorir Linha e Coluna
         for (int i=0; i < gridScript.box.GetLength(0); i++)
         {
             Button botao = gridScript.box[i, y].GetComponent<Button>();
             ColorBlock cor = botao.colors;
-            cor.normalColor = corPadrao.pressedColor;
-            botao.colors = cor;
+            if (cor.normalColor != corBoxInvalida.normalColor)
+            {
+                cor.normalColor = corPadrao.pressedColor;
+                botao.colors = cor;
+            }
 
             botao = gridScript.box[x, i].GetComponent<Button>();
             cor = botao.colors;
-            cor.normalColor = corPadrao.pressedColor;
-            botao.colors = cor;
+            if (cor.normalColor != corBoxInvalida.normalColor)
+            {
+                cor.normalColor = corPadrao.pressedColor;
+                botao.colors = cor;
+            }
         }
 
-        colorirQuadrante(x, y, gridScript);
+        colorirQuadrante(x, y);
     }
 
-    void Start()
+    void Awake()
     {
         Button box = gameObject.GetComponent<Button>();
         corPadrao = box.colors;
+
+        GameObject grid = GameObject.FindWithTag("Grid");
+        gridScript = grid.GetComponent<GridScript>();
+
+        corBoxInvalida = gridScript.boxInvalida;
     }
 
     void Update()
@@ -63,7 +68,25 @@ public class BoxSelecionada : MonoBehaviour, ISelectHandler
         
     }
 
-    public void colorirQuadrante(int x, int y, GridScript gridScript)
+    public void resetarCoresGrid()
+    {
+
+        for (int i = 0; i < gridScript.box.GetLength(0); i++)
+        {
+            for (int j = 0; j < gridScript.box.GetLength(1); j++)
+            {
+                Button botao = gridScript.box[i, j].GetComponent<Button>();
+                ColorBlock corBox = botao.colors;
+
+                if (corBox.normalColor != corBoxInvalida.normalColor)
+                {
+                    botao.colors = corPadrao;
+                }
+            }
+        }
+    }
+
+    public void colorirQuadrante(int x, int y)
     {
         int iIni, iFim, jIni, jFim;
 
@@ -105,8 +128,11 @@ public class BoxSelecionada : MonoBehaviour, ISelectHandler
             {
                 Button botao = gridScript.box[i, j].GetComponent<Button>();
                 ColorBlock cor = botao.colors;
-                cor.normalColor = corQuadrante;
-                botao.colors = cor;
+                if (cor.normalColor != corBoxInvalida.normalColor)
+                {
+                    cor.normalColor = corQuadrante;
+                    botao.colors = cor;
+                }
             }
         }
     }

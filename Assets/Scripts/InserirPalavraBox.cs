@@ -30,6 +30,8 @@ public class InserirPalavraBox : MonoBehaviour, ISelectHandler
             botao.colors = cor;
         }
 
+        gridScript.verificaPalavraInseridaCelula();
+
         //if(palavra.text != textOriginal)
         //{
         //    gridScript.palavraInvalida(x, y);
