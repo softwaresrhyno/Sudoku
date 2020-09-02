@@ -42,6 +42,7 @@ public class GridScript : MonoBehaviour
         embaralhar();
 
         palavras = new string[9] { "Cachorro", "Cavalo", "Gato", "Raposa", "Leão", "Abacate", "Girafa", "Hipopótamo", "Funchal" };
+        palavrasOrdemCrescente();
 
         instanciaPalavras();
         
@@ -65,6 +66,7 @@ public class GridScript : MonoBehaviour
         }
 
         apagaNumeros();
+        bloqueiaCelulas();
 
         xSelecionado = -1;
         ySelecionado = -1;
@@ -73,19 +75,8 @@ public class GridScript : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < box.GetLength(0); i++)
-        {
-            for (int j = 0; j < box.GetLength(1); j++)
-            {
-                string textOriginal = boxGameplay[i, j];
-                Text text = box[i, j].GetComponentInChildren<Text>();
-
-                if ((text.text != textOriginal) && text.text != "")
-                {
-                    palavraInvalida(i, j);
-                }
-            }
-        }
+        //verificaPalavraInseridaCelula();
+        clicouNoGrid();
     }
 
     public void gerarSudoku()
@@ -231,6 +222,22 @@ public class GridScript : MonoBehaviour
         }
     }
 
+    public void palavrasOrdemCrescente()
+    {
+        var words = new ArrayList();
+        for (int i = 0; i < palavras.Length; i++)
+        {
+            words.Add(palavras[i]);
+        }
+        words.Sort();
+        int cont = 0;
+        foreach (var word in words)
+        {
+            palavras[cont] = word.ToString();
+            cont++;
+        }
+    }
+
     public void ajustaTamanhoCelula()
     {
         GridLayoutGroup gridLayoutGroup = gameObject.GetComponent<GridLayoutGroup>();
@@ -286,17 +293,181 @@ public class GridScript : MonoBehaviour
         }
     }
 
+    public void bloqueiaCelulas()
+    {
+        for(int i = 0; i < box.GetLength(0); i++)
+        {
+            for(int j = 0; j < box.GetLength(1); j++)
+            {
+                Text text = box[i,j].GetComponentInChildren<Text>();
+
+                if(text.text != "")
+                {
+                    Button botao = text.GetComponentInParent<Button>();
+                    botao.interactable = false;
+                }
+            }
+        }
+    }
+
     public void apagaBox()
     {
         Text text = box[xSelecionado, ySelecionado].GetComponentInChildren<Text>();
         text.text = "";
         
         BoxSelecionada boxSelecionadaScript = GameObject.FindWithTag("Box").GetComponent<BoxSelecionada>();
-        Color corQuadrante = boxSelecionadaScript.corQuadrante;
+        boxSelecionadaScript.resetarCoresGrid();
 
+        //Color corQuadrante = boxSelecionadaScript.corQuadrante;
         Button botaoSelecionado = box[xSelecionado, ySelecionado].GetComponent<Button>();
         ColorBlock cor = botaoSelecionado.colors;
-        cor.normalColor = corQuadrante;
+        cor.normalColor = Color.white;
         botaoSelecionado.colors = cor;
+    }
+
+    public void verificaPalavraInseridaCelula()
+    {
+        //for (int i = 0; i < box.GetLength(0); i++)
+        //{
+        //    for (int j = 0; j < box.GetLength(1); j++)
+        //    {
+                Text text = box[xSelecionado, ySelecionado].GetComponentInChildren<Text>();
+
+                if (text.text != "")
+                {
+                    bool possuiColuna = possuiPalavraIgualColuna(text, xSelecionado, ySelecionado);
+                    bool possuiLinha = possuiPalavraIgualLinha(text, xSelecionado, ySelecionado);
+                    bool possuiQuadrante = possuiPalavraIgualQuadrante(text, xSelecionado, ySelecionado);
+
+
+                    //print("Row: " + possuiLinha + " Col: " + possuiColuna);
+
+                    if (possuiColuna || possuiLinha || possuiQuadrante)
+                    {
+                        palavraInvalida(xSelecionado, ySelecionado);
+                    }
+
+                    //if ((text.text != textOriginal) && text.text != "")
+                    //{
+                    //palavraInvalida(i, j);
+                    //}
+                }
+        //    }
+        //}
+    }
+
+    public bool possuiPalavraIgualColuna(Text text, int x, int y)
+    {
+        for(int i = 0; i < box.GetLength(1); i++)
+        {
+            if (i != x)
+            {
+                Text textBox = box[i, y].GetComponentInChildren<Text>();
+
+                if (textBox.text == text.text)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    public bool possuiPalavraIgualLinha(Text text, int x, int y)
+    {
+        for(int i = 0; i < box.GetLength(1); i++)
+        {
+            if (i != y)
+            {
+                Text textBox = box[x, i].GetComponentInChildren<Text>();
+
+                if (textBox.text == text.text)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool possuiPalavraIgualQuadrante(Text text, int x, int y)
+    {
+        int iIni, iFim, jIni, jFim;
+
+        if (x >= 0 && x <= 2)
+        {
+            iIni = 0;
+            iFim = 2;
+        }
+        else if (x >= 3 && x <= 5)
+        {
+            iIni = 3;
+            iFim = 5;
+        }
+        else
+        {
+            iIni = 6;
+            iFim = 8;
+        }
+
+        if (y >= 0 && y <= 2)
+        {
+            jIni = 0;
+            jFim = 2;
+        }
+        else if (y >= 3 && y <= 5)
+        {
+            jIni = 3;
+            jFim = 5;
+        }
+        else
+        {
+            jIni = 6;
+            jFim = 8;
+        }
+
+        for (int i = iIni; i <= iFim; i++)
+        {
+            for (int j = jIni; j <= jFim; j++)
+            {
+                if (i != x && j != y)
+                {
+                    Text textBox = box[i, j].GetComponentInChildren<Text>();
+
+                    if (textBox.text == text.text)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void clicouNoGrid()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            RaycastHit hit = new RaycastHit();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                //if (hit.collider.gameObject == this.gameObject)
+                //{
+                //    print("Clicou dentro!");
+                //}
+            } else
+            {
+                BoxSelecionada boxSelecionadaScript = GameObject.FindWithTag("Box").GetComponent<BoxSelecionada>();
+                boxSelecionadaScript.resetarCoresGrid();
+
+                //xSelecionado = -1;
+                //ySelecionado = -1;
+                //print("Clicou fora!");
+            }
+        }
     }
 }
