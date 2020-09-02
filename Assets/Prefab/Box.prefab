@@ -220,8 +220,13 @@ MonoBehaviour:
     m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ColorMultiplier: 0
     m_FadeDuration: 0
+=======
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
 =======
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

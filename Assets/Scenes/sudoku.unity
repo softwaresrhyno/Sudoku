@@ -518,7 +518,11 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &281338836
+=======
+--- !u!1 &204320630
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
 =======
 --- !u!1 &204320630
 >>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
@@ -530,14 +534,20 @@ GameObject:
   serializedVersion: 6
   m_Component:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - component: {fileID: 281338837}
   m_Layer: 0
   m_Name: GameObject
 =======
+=======
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
   - component: {fileID: 204320631}
   - component: {fileID: 204320632}
   m_Layer: 5
   m_Name: Opcoes
+<<<<<<< HEAD
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
+=======
 >>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,8 +555,13 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!4 &281338837
 Transform:
+=======
+--- !u!224 &204320631
+RectTransform:
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
 =======
 --- !u!224 &204320631
 RectTransform:
@@ -555,6 +570,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD
   m_GameObject: {fileID: 281338836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -565,6 +581,8 @@ RectTransform:
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 =======
+=======
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
   m_GameObject: {fileID: 204320630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -701,6 +719,9 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+<<<<<<< HEAD
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
+=======
 >>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
 --- !u!1 &329101312
 GameObject:
@@ -1183,6 +1204,7 @@ MonoBehaviour:
   - {fileID: 0}
   comecaComPalavras: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
   qtdNumerosApagar: 52
   xSelecionado: -1
   ySelecionado: -1
@@ -1196,6 +1218,8 @@ MonoBehaviour:
     m_FadeDuration: 0
   palavras: []
 =======
+=======
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
   qtdNumerosApagar: 60
   xSelecionado: -1
   ySelecionado: -1
@@ -1221,6 +1245,9 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1037.794, y: 1037.794, z: 1}
   m_Center: {x: 0, y: -518, z: 0}
+<<<<<<< HEAD
+>>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
+=======
 >>>>>>> 0c92753685ff346d32b8ac9d3b5f5cf8470b6829
 --- !u!222 &915277703
 CanvasRenderer:
